@@ -5,57 +5,41 @@ import { Customer } from '../model/customer';
   providedIn: 'root'
 })
 export class CustomerService {
-  customers: Customer[] = []
-  nextId: number = 1;
-  private readonly CUSTOMERS_KEY = 'customers';
-  private readonly NEXT_ID_KEY = 'nextId';
-  constructor() {
+  customers: Customer[] = [];
+  customer: Customer | null = null;
 
-    const customer:Customer = {
-      id: 1,
-      name: "Giovanni",
-      email: "teste@teste.com",
-      dateOfBirth: new Date("1996-03-24")
+  constructor() {
+    this.loadCustomersFromLocalStorage();
+  }
+
+  getList(): Customer[] {
+    return this.customers;
+  }
+
+  update(customer: Customer) {
+    const existingCustomer = this.customers.find(customer => customer.id === customer.id);
+    if (existingCustomer) {
+      Object.assign(existingCustomer, customer);
+    } else {
+      this.customers.push(customer);
     }
 
-    this.customers.push(customer);
+    this.saveCustomersToLocalStorage();
   }
 
-  getList() : Customer[]{
-    return JSON.parse(JSON.stringify(this.customers));
-  }
-
-  getById(){
-
-  }
-  update(){
-
-  }
-
-  delete(id:number): void {
+  delete(id: number) {
     this.customers = this.customers.filter(customer => customer.id !== id);
+    this.saveCustomersToLocalStorage();
   }
 
-  create(customer: Customer): void {
-    customer.id = this.nextId++;
-    this.customers.push(customer);
-    this.saveToLocalStorage();
+  private saveCustomersToLocalStorage() {
+    localStorage.setItem('customers', JSON.stringify(this.customers));
   }
 
-  private loadFromLocalStorage(): void{
-    const storedCustomers = localStorage.getItem(this.CUSTOMERS_KEY);
-    const storedNextId = localStorage.getItem(this.NEXT_ID_KEY);
-
-    if (storedCustomers){
+  private loadCustomersFromLocalStorage() {
+    const storedCustomers = localStorage.getItem('customers');
+    if (storedCustomers) {
       this.customers = JSON.parse(storedCustomers);
     }
-    if (storedNextId){
-      this.nextId = JSON.parse(storedNextId);
-    }
-  }
-
-  private saveToLocalStorage(): void{
-    localStorage.setItem(this.CUSTOMERS_KEY, JSON.stringify(this.customers));
-    localStorage.setItem(this.NEXT_ID_KEY, JSON.stringify(this.nextId));
   }
 }

@@ -21,19 +21,23 @@ export class CustomerListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.customers =  this.customerService.getList();
+    this.loadUsers();
+  }
+  
+  loadUsers(): void {
+    this.customers = this.customerService.getList();
   }
 
-  goToCustomerEdit(id:number){
+  goToCustomerEdit(id: number){
     this.router.navigate(['customer-edit',id]);
   }
 
-  deleteCustomer(){
+  deleteCustomer(id: number):void {
     this.customerService.delete(this.customerIdSelectedToDelete);
     this.ngOnInit()
   }
 
-  openModalConfirmDelete(id:number){
+  openModalConfirmDelete(id: number){
     this.customerIdSelectedToDelete = id;
   }
 
