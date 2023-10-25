@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class CustomerListComponent implements OnInit {
 
   customers: Customer[] = []
-  customerIdSelectedToDelete:number = -1
+  customerIdSelectedToDelete:string = '-1'
 
   constructor (
     private customerService: CustomerService,
@@ -28,16 +28,16 @@ export class CustomerListComponent implements OnInit {
     this.customers = this.customerService.getList();
   }
 
-  goToCustomerEdit(id: number){
+  goToCustomerEdit(id: string){
     this.router.navigate(['customer-edit',id]);
   }
 
-  deleteCustomer(id: number):void {
+  deleteCustomer(id: string):void {
     this.customerService.delete(this.customerIdSelectedToDelete);
     this.ngOnInit()
   }
 
-  openModalConfirmDelete(id: number){
+  openModalConfirmDelete(id: string){
     this.customerIdSelectedToDelete = id;
   }
 

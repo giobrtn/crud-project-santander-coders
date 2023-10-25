@@ -1,23 +1,53 @@
-<p *ngIf="id >0 ">Você esta editando o id {{id}}</p>
-<p *ngIf="id < 0 ">Você esta inserindo um novo cadastro</p>
+<p *ngIf="id !== 'newCustomer'  ">Você esta editando o id {{id}}</p>
+<p *ngIf="id === 'newCustomer' ">Você esta inserindo um novo cadastro</p>
 
 <div class="container">
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit(customerForm.value)">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" formControlName="name" placeholder="João da Silva">
 
-    <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="name" [(ngModel)]="customer.name" placeholder="João da Silva">
-        <label for="name">Nome</label>
-    </div>
+            <div
+                *ngIf="customerForm.get('name')?.invalid && (customerForm.get('name')?.dirty || customerForm.get('name')?.touched)">
+                <div class="text-danger" *ngIf="customerForm.get('name')?.errors?.['required']">
+                    Nome é obrigatório.
+                </div>
+                <div class="text-danger" *ngIf="customerForm.get('name')?.errors?.['minlength']">
+                    Nome tem que ter mais de 6 caracteres.
+                </div>
+            </div>
 
-    <div class="form-floating mb-3">
-        <input type="date" class="form-control" id="birthDay" placeholder="18/06/2000">
-        <label for="birthDay">Data de Nascimento</label>
-    </div>
+            <label for="name">Nome</label>
+        </div>
 
-    <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="floatingInput" [(ngModel)]="customer.email"
-            placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
-    </div>
+        <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="dateOfBirth" name="birthDay" formControlName="birthDay"
+                placeholder="18/06/2000">
+            <label for="birthDay">Data de Nascimento</label>
+        </div>
 
-    <button type="button" class="btn btn-primary" (click)="save()">Submit</button>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com"
+                formControlName="email">
+
+            <div
+                *ngIf="customerForm.get('email')?.invalid && (customerForm.get('email')?.dirty || customerForm.get('email')?.touched)">
+                <div class="text-danger" *ngIf="customerForm.get('email')?.errors?.['required']">
+                    E-mail é obrigatório.
+                </div>
+                <div class="text-danger" *ngIf="customerForm.get('email')?.errors?.['email']">
+                    E-mail inválido.
+                </div>
+
+                <div class="text-danger" *ngIf="customerForm.get('email')?.errors?.['invalidEmailAda']">
+                    O email tem que conter @ada.com
+                </div>
+
+            </div>
+
+
+            <label for="email">Email address</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="!customerForm.valid">Submit</button>
+    </form>
 </div>

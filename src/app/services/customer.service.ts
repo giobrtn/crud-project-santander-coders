@@ -16,10 +16,15 @@ export class CustomerService {
     return this.customers;
   }
 
+  getById(id: string){
+    return this.customers.find( customer => customer.id === id);
+  }  
   update(customer: Customer) {
     const existingCustomer = this.customers.find(customer => customer.id === customer.id);
     if (existingCustomer) {
-      Object.assign(existingCustomer, customer);
+      existingCustomer.name = customer.name;
+      existingCustomer.email = customer.email;
+      existingCustomer.birthDay = customer.birthDay;
     } else {
       this.customers.push(customer);
     }
@@ -27,9 +32,16 @@ export class CustomerService {
     this.saveCustomersToLocalStorage();
   }
 
-  delete(id: number) {
+  delete(id: string) {
     this.customers = this.customers.filter(customer => customer.id !== id);
     this.saveCustomersToLocalStorage();
+  }
+
+  create(customer:Customer){
+
+    let uuid = self.crypto.randomUUID();
+    customer.id = uuid;
+    this.customers.push(customer)
   }
 
   private saveCustomersToLocalStorage() {
