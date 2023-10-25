@@ -40,6 +40,7 @@ export class CustomerService {
     const storedCustomers = localStorage.getItem('customers');
     if (storedCustomers) {
       this.customers = JSON.parse(storedCustomers);
+      
     }
   }
 }
