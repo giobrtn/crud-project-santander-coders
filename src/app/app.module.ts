@@ -9,6 +9,7 @@ import { CustomerListComponent } from './pages/customer-list/customer-list.compo
 import { CustomerEditComponent } from './pages/customer-edit/customer-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomerService } from './services/customer.service';
+import { LoginComponent } from './pages/login/login.component';
 
 
 
@@ -18,7 +19,8 @@ import { CustomerService } from './services/customer.service';
     HeaderComponent,
     FooterComponent,
     CustomerListComponent,
-    CustomerEditComponent
+    CustomerEditComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

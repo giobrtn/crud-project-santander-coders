@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./customer-list.component.css']
 })
 export class CustomerListComponent implements OnInit {
-
   customers: Customer[] = []
   customerIdSelectedToDelete:string = '-1'
 

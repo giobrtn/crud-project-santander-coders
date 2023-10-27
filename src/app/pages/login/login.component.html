@@ -1,0 +1,21 @@
+<body class="bg-light">
+    <div class="container" *ngIf="!loggedIn">
+        <div class="row justify-content-center align-items-center vh-100">
+            <div class="col-md-6">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="p-4 rounded border">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Usuário</label>
+                        <input type="text" id="username" formControlName="username" class="form-control" placeholder="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Senha</label>
+                        <input type="password" id="password" formControlName="password" class="form-control"
+                            placeholder="">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                    <div *ngIf="loginForm.invalid && submitted" class="text-danger">Usuário ou senha inválidos</div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
