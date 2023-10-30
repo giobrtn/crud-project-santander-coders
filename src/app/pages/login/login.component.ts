@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit{
   loginForm: FormGroup;
   loggedIn: boolean = false;
   submitted: boolean = false;
+  
 
   constructor (private fb: FormBuilder, private authService: AuthService, private router: Router){
     this.loginForm = this.fb.group({
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit{
         this.router.navigate(['customer-list']);
       } else {
         console.error("Login falhou.")
+        
       }
     }
     this.submitted = true;
